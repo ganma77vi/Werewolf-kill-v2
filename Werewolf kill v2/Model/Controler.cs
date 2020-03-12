@@ -9,49 +9,45 @@ namespace Werewolf_kill_v2.Model
     public class Controler//控制者，父类
     {
         private Roles role; //角色
-        public Roles Role { get => role; set => role = value; }
         private int sn;//序号(从0开始)
+        private string isalive;     //是否存活
+        private bool ifincampaign;//是否曾参与警察竞选
+        private int campaignvoteSn;//上警投票给谁
+        private int campaignvotes;//上警得票数
+        private float dayvoteSn;//放逐投票给谁
+        private float dayvotes;//被放逐得票数
+        private int killvotes;//被杀投票数
+        private bool iseyeopen;//是否睁眼
+        public Roles Role { get => role; set => role = value; }
         public int Sn { get => sn; set => sn = value; }
-        public  Controler(Roles role_,int sn_) //角色初始化
+        public string Isalive { get => isalive; set => isalive = value; }
+        public bool Ifincampaign { get => ifincampaign; set => ifincampaign = value; }
+        public int CampaignvoteSn { get => campaignvoteSn; set => campaignvoteSn = value; }
+        public int Campaignvotes { get => campaignvotes; set => campaignvotes = value; }
+        public float DayvoteSn { get => dayvoteSn; set => dayvoteSn = value; }
+        public float Dayvotes { get => dayvotes; set => dayvotes = value; }
+        public int Killvotes { get => killvotes; set => killvotes = value; }
+        public bool Iseyeopen { get => iseyeopen; set => iseyeopen = value; }
+
+        public  Controler(int sn_) //sn初始化赋值
         {
-            Role = role_;
             Sn = sn_;
-            if (Role.Rolename == "Cunmin")
-            {
-                Role = new Cunmin();
-            }
-            if (Role.Rolename == "Langren")
-            {
-                Role = new Langren();
-            }
-            if (Role.Rolename == "Yuyanjia")
-            {
-                Role = new Yuyanjia();
-            }
-            if (Role.Rolename == "Jingzhang")
-            {
-                Role = new Jingzhang();
-            }
-            if (Role.Rolename == "Nvwu")
-            {
-                Role = new Nvwu();
-            }
-            if (Role.Rolename == "Lieren")
-            {
-                Role = new Lieren();
-            }
+        }
+        public void Speak()
+        {
+
         }
     }
     public class AI : Controler//电脑AI
     {
-        public AI(Roles role_, int sn_) :base(role_, sn_)
+        public AI(int sn_) :base(sn_)
         {
             
         }
     }
     public class Player : Controler//玩家
     {
-        public Player(Roles role_, int sn_) : base(role_, sn_)
+        public Player(int sn_) : base(sn_)
         {
 
         }
