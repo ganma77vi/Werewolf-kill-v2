@@ -28,11 +28,17 @@ namespace Werewolf_kill_v2.Views
         List<AI> aiList;//AIList
         List<Controler> controlerlist;//控制者List
         List<Controler> langrenlist;//狼人控制者list
+        List<Langren> langrenlist1;//狼人角色对象list
         List<Controler> pingminlist;//平民控制者list
+        List<Pingmin> pingminlist1;//平民角色对象list
         Controler yuyanjia;//预言家的控制者对象
+        Yuyanjia yuyanjia1;//预言家的角色对象
         Controler nvwu;//女巫的控制者对象
+        Nvwu nvwu1;//女巫的角色对象
         Controler lieren;//猎人的控制者对象
+        Lieren lieren1;//猎人的角色对象
         Controler baichi;//白痴的控制者对象
+        Baichi baichi1;//白痴的角色对象
         int gamestatus;//游戏终止状态，详见Werewolf_kill_v2.Model.VictoryCondition
         bool werewolfWin;//狼人是否获胜
         bool humanWin;//人类是否获胜
@@ -51,7 +57,7 @@ namespace Werewolf_kill_v2.Views
             {
                 if(i==0)//首夜
                 {
-                    //首夜方法()
+                    StartNight();
                 }
                 if(i==1)//第一天
                 {
@@ -86,13 +92,13 @@ namespace Werewolf_kill_v2.Views
 
 
             controlerlist = new List<Controler>();//将所有控制者信息存入一个List
-            for (int i = 0; i < playerList.Count - 1; i++)
+            for (int i = 0; i < playerList.Count; i++)
             {
-                controlerlist[i] = playerList[i];
+                controlerlist.Add(playerList[i]);
             }
-            for (int i = controlerlist.Count; i < aiList.Count - 1; i++)
+            for (int i = controlerlist.Count; i < controlernum; i++)
             {
-                controlerlist[i] = aiList[i];
+                controlerlist.Add(aiList[i]);
             }
 
 
@@ -104,7 +110,7 @@ namespace Werewolf_kill_v2.Views
         {
             Random random = new Random();
             List<Controler> newList = new List<Controler>();//List初始化
-            for(int i=0;i<controlers.Count-1;i++)
+            for(int i=0;i<controlers.Count;i++)
             {
                 controlers[i] = new Controler(i);//控制者对象遍历并各个进行初始化
                 newList.Insert(random.Next(newList.Count), controlers[i]);//随机插入newlist，接下来进行角色分配
@@ -138,24 +144,32 @@ namespace Werewolf_kill_v2.Views
                     baichi = newList[11];
                     break;
             }
-            for(int i=0;i<newList.Count-1;i++)
+            for(int i=0;i<newList.Count;i++)
             {
                 controlers[newList[i].Sn]=newList[i];
             }
             controlerlist= controlers;//分配完成职业并重新排序好的控制者列表获取引用
             langrenlist = new List<Controler>();
             pingminlist = new List<Controler>();
+            langrenlist1 = new List<Langren>();
+            pingminlist1 = new List<Pingmin>();
 
 
             /*通过随机分配完成并排序好的控制者List中
              * 获取狼人列表以及平民列表的应用
-             * 获得按sn排列的狼人与平民list*/
+             * 获得按sn排列的狼人与平民list以及狼人平民角色list*/
             foreach (Controler item in controlers)
             {
                 if (item.Role is Langren)
+                {
                     langrenlist.Add(item);
+                    langrenlist1.Add((Langren)item.Role);
+                }
                 if (item.Role is Pingmin)
+                {
                     pingminlist.Add(item);
+                    pingminlist1.Add((Pingmin)item.Role);
+                }
             }
 
         }
@@ -186,5 +200,10 @@ namespace Werewolf_kill_v2.Views
             //预言家行动
         }
         #endregion
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            TheGame();
+        }
     }
 }

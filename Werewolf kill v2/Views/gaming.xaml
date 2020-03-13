@@ -9,6 +9,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <Button Content="按下以开始游戏" HorizontalAlignment="Center" Width="150" Height="30" Click="Button_Click"></Button>
     </Grid>
 </Page>

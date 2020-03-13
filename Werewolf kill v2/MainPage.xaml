@@ -7,8 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    <Grid>
-        <Button Content="按下以开始" HorizontalAlignment="Center" Width="150" Height="30" ></Button>
-    </Grid>
+    <Frame Name="MyFrame">
+        <Grid>
+            <Button Content="按下以开始" HorizontalAlignment="Center" Width="150" Height="30" Click="Button_Click"></Button>
+        </Grid>
+        <Frame.ContentTransitions>
+            <TransitionCollection>
+                <EdgeUIThemeTransition Edge="Bottom"></EdgeUIThemeTransition>
+            </TransitionCollection>
+        </Frame.ContentTransitions>
+    </Frame>
 </Page>
