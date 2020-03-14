@@ -28,16 +28,44 @@ namespace Werewolf_kill_v2
             this.InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            MySpiltView.IsPaneOpen = !MySpiltView.IsPaneOpen;
+        }
+
+        private void HamburgerListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (HamburgerListBox.SelectedIndex == 0)
+            {
+                if (this.Frame != null)
+                {
+                    MyFrame.Navigate(typeof(Settings));
+                }
+            }
+            if (HamburgerListBox.SelectedIndex == 1)
+            {
+                if (this.Frame != null)
+                {
+                    MyFrame.Navigate(typeof(Fupan));
+                }
+            }
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            if (this.Frame != null)
+            if (HamburgerListBox.SelectedIndex == 0)
             {
-                MyFrame.Navigate(typeof(gaming));
+                if (this.Frame != null)
+                {
+                    MyFrame.Navigate(typeof(Settings));
+                }
+            }
+            if (HamburgerListBox.SelectedIndex == 1)
+            {
+                if (this.Frame != null)
+                {
+                    MyFrame.Navigate(typeof(Fupan));
+                }
             }
         }
     }

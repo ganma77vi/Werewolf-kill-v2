@@ -1,0 +1,81 @@
+﻿<Page
+    x:Class="Werewolf_kill_v2.Views.Settings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Werewolf_kill_v2.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Text="游戏配置选项" Grid.Row="0" Grid.Column="1" FontSize="30" FontWeight="Bold" Grid.ColumnSpan="2"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+        <CheckBox Name="selfexplosioncheckbox" Grid.Row="1" Grid.Column="1" Content="狼人是否可自爆吞警徽"
+                  IsChecked="False" HorizontalAlignment="Left" Checked="selfexplosioncheckbox_Checked" 
+                  Unchecked="selfexplosioncheckbox_Unchecked"></CheckBox>
+        <StackPanel Name="singleexplosionStackPanel" Orientation="Horizontal" Grid.Row="1" Grid.Column="2" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <RadioButton Content="单爆" Checked="ExplosionRadioButton_Checked"/>
+            <RadioButton Content="双爆" Checked="ExplosionRadioButton_Checked"/>
+        </StackPanel>
+        <StackPanel Name="killmodeStackPanel" Orientation="Horizontal" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <RadioButton Content="屠城" Checked="KillRadioButton_Checked"/>
+            <RadioButton Content="屠边" Checked="KillRadioButton_Checked"/>
+        </StackPanel>
+        <CheckBox Name="selfsavecheckbox" Grid.Row="2" Grid.Column="1" Content="女巫是否可自救"
+                  IsChecked="False" HorizontalAlignment="Left" Checked="selfsavecheckbox_Checked" 
+                  Unchecked="selfexplosioncheckbox_Unchecked"></CheckBox>
+        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+            <Slider Name="PKSlider" Header="平票后PK几轮发言" Width="200"
+                ValueChanged="PKSlider_ValueChanged" Minimum="1" Maximum="5" TickFrequency="1"
+                SnapsTo="Ticks" HorizontalAlignment="Left"/>
+            <TextBlock  Text="{Binding Value, ElementName=PKSlider}" VerticalAlignment="Center" ></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.Column="2" Orientation="Horizontal">
+            <Slider Name="lastwordSlider"  Header="遗言时间" Width="200"
+                ValueChanged="lastwordSlider_ValueChanged" Minimum="30" Maximum="120" TickFrequency="30"
+                SnapsTo="Ticks" HorizontalAlignment="Left"/>
+            <TextBlock  Text="{Binding Value, ElementName=lastwordSlider}" VerticalAlignment="Center" ></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
+            <Slider Name="speaktimeSlider"  Header="发言时间" Width="200"
+                ValueChanged="speaktimeSlider_ValueChanged" Minimum="30" Maximum="180" TickFrequency="30"
+                SnapsTo="Ticks" HorizontalAlignment="Left"/>
+            <TextBlock  Text="{Binding Value, ElementName=speaktimeSlider}" VerticalAlignment="Center" ></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Grid.Column="2" Orientation="Horizontal">
+            <Slider Name="sheriffspeaktimeSlider" Header="警长发言时间" Width="200"
+                ValueChanged="sheriffspeaktimeSlider_ValueChanged" Minimum="30" Maximum="240" TickFrequency="30"
+                SnapsTo="Ticks" HorizontalAlignment="Left"/>
+            <TextBlock  Text="{Binding Value, ElementName=sheriffspeaktimeSlider}" VerticalAlignment="Center" ></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal">
+            <Slider Name="controlernumSlider" Header="游戏人数" Width="200"
+                ValueChanged="controlernumSlider_ValueChanged" Minimum="6" Maximum="16" TickFrequency="1"
+                SnapsTo="Ticks" HorizontalAlignment="Left"/>
+            <TextBlock  Text="{Binding Value, ElementName=controlernumSlider}" VerticalAlignment="Center" ></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="5" Grid.Column="2" Orientation="Horizontal">
+            <Slider Name="playernumSlider" Header="玩家人数" Width="200"
+                ValueChanged="playernumSlider_ValueChanged" Minimum="6" Maximum="16" TickFrequency="1"
+                SnapsTo="Ticks" HorizontalAlignment="Left"/>
+            <TextBlock  Text="{Binding Value, ElementName=playernumSlider}" VerticalAlignment="Center" ></TextBlock>
+        </StackPanel>
+        <Button Name="gameStart" Click="gameStart_Click" Content="开始游戏" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center"></Button>
+    </Grid>
+</Page>

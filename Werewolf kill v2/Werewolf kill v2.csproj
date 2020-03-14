@@ -128,8 +128,14 @@
     <Compile Include="Network\Httprequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Viewmodel\BaseViewModel.cs" />
+    <Compile Include="Views\Fupan.xaml.cs">
+      <DependentUpon>Fupan.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\gaming.xaml.cs">
       <DependentUpon>gaming.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -156,7 +162,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Fupan.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\gaming.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
