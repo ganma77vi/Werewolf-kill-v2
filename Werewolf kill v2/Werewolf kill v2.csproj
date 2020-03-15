@@ -128,6 +128,7 @@
     <Compile Include="Network\Httprequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Viewmodel\BaseViewModel.cs" />
+    <Compile Include="Viewmodel\ControlerViewModel.cs" />
     <Compile Include="Views\Fupan.xaml.cs">
       <DependentUpon>Fupan.xaml</DependentUpon>
     </Compile>

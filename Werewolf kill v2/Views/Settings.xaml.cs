@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Werewolf_kill_v2;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -53,7 +54,7 @@ namespace Werewolf_kill_v2.Views
 
         private void controlernumSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-
+            (Application.Current as App).controlernum = (int)e.NewValue;
         }
 
         private void gameStart_Click(object sender, RoutedEventArgs e)
@@ -81,7 +82,7 @@ namespace Werewolf_kill_v2.Views
 
         private void playernumSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-
+            (Application.Current as App).playernum = (int)e.NewValue;
         }
 
         private void PKSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)

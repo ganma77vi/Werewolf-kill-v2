@@ -26,6 +26,8 @@ namespace Werewolf_kill_v2
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，
         /// 已执行，逻辑上等同于 main() 或 WinMain()。
         /// </summary>
+        public int playernum;//玩家人数
+        public int controlernum;//总游戏人数
         public App()
         {
             this.InitializeComponent();

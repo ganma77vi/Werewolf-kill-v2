@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -26,10 +27,10 @@ namespace Werewolf_kill_v2.Views
         #region 该页面中的全局变量定义
         List<Player> playerList;//玩家List
         List<AI> aiList;//AIList
-        List<Controler> controlerlist;//控制者List
-        List<Controler> langrenlist;//狼人控制者list
+        ObservableCollection<Controler> controlerlist;//控制者List
+        ObservableCollection<Controler> langrenlist;//狼人控制者list
         List<Langren> langrenlist1;//狼人角色对象list
-        List<Controler> pingminlist;//平民控制者list
+        ObservableCollection<Controler> pingminlist;//平民控制者list
         List<Pingmin> pingminlist1;//平民角色对象list
         Controler yuyanjia;//预言家的控制者对象
         Yuyanjia yuyanjia1;//预言家的角色对象
@@ -42,17 +43,19 @@ namespace Werewolf_kill_v2.Views
         int gamestatus;//游戏终止状态，详见Werewolf_kill_v2.Model.VictoryCondition
         bool werewolfWin;//狼人是否获胜
         bool humanWin;//人类是否获胜
-        int playernum;//玩家人数
-        int controlernum;//总游戏人数
+        Viewmodel.ControlerViewModel controlerViewModel;
         #endregion
         public gaming()
         {
             this.InitializeComponent();
+            controlerViewModel = new Viewmodel.ControlerViewModel();
+            this.DataContext = controlerViewModel;
+            TheGame();
         }
         #region 游戏进程
         public void TheGame() //整个游戏进程
         {
-            GameInitialize(playernum,controlernum);
+            GameInitialize((Application.Current as App).playernum, (Application.Current as App).controlernum);
             for(int i=0;;i++)//用无限循环来开始首夜直到游戏终止状态达成
             {
                 if(i==0)//首夜
@@ -88,25 +91,32 @@ namespace Werewolf_kill_v2.Views
         public void GameInitialize(int playernum, int controlernum)
         {
             playerList = new List<Player>();   //获取玩家信息并存入List
+            for (int i = 0; i < playernum; i++)
+            {
+                playerList.Add(new Player(i));
+            }
             aiList = new List<AI>();//生成并获取AI信息并存入List
+            for (int i = playernum; i < controlernum; i++)
+            {
+                aiList.Add(new AI(i));
+            }
 
-
-            controlerlist = new List<Controler>();//将所有控制者信息存入一个List
+            controlerlist = new ObservableCollection<Controler>();//将所有控制者信息存入一个List
             for (int i = 0; i < playerList.Count; i++)
             {
                 controlerlist.Add(playerList[i]);
             }
-            for (int i = controlerlist.Count; i < controlernum; i++)
+            for (int i = 0; i < controlernum - playernum; i++)
             {
                 controlerlist.Add(aiList[i]);
             }
-
+            controlerViewModel.Controlers=controlerlist;
 
             RandomRoleAssign(controlerlist, controlernum);//分配控制者角色
         }
         #endregion
         #region 随机分配控制者角色并进行所有角色对象初始化方法
-        public void RandomRoleAssign(List<Controler> controlers,int playernum)
+        public void RandomRoleAssign(ObservableCollection<Controler> controlers,int playernum)
         {
             Random random = new Random();
             List<Controler> newList = new List<Controler>();//List初始化
@@ -149,8 +159,8 @@ namespace Werewolf_kill_v2.Views
                 controlers[newList[i].Sn]=newList[i];
             }
             controlerlist= controlers;//分配完成职业并重新排序好的控制者列表获取引用
-            langrenlist = new List<Controler>();
-            pingminlist = new List<Controler>();
+            langrenlist = new ObservableCollection<Controler>();
+            pingminlist = new ObservableCollection<Controler>();
             langrenlist1 = new List<Langren>();
             pingminlist1 = new List<Pingmin>();
 
