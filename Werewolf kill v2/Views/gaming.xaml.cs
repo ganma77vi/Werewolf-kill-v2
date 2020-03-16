@@ -56,7 +56,32 @@ namespace Werewolf_kill_v2.Views
         public void TheGame() //整个游戏进程
         {
             GameInitialize((Application.Current as App).playernum, (Application.Current as App).controlernum);
-            for(int i=0;;i++)//用无限循环来开始首夜直到游戏终止状态达成
+            #region 游戏配置播报
+            string a, b, c, d, e,f;
+            if ((Application.Current as App).isSelfExplosion)
+            {
+                if((Application.Current as App).isSingleExplosion)
+                    a = "本局游戏配置如下：\n狼人单爆\n";
+                else
+                    a = "本局游戏配置如下：\n狼人双爆\n";
+            }
+            else
+                a = "本局游戏配置如下：\n狼人不可自爆\n";
+            if ((Application.Current as App).isSelfAntidote)
+                b = "女巫可自救\n";
+            else
+                b = "女巫不可自救\n";
+            if ((Application.Current as App).isKillAll)
+                c = "狼人获胜条件为屠城\n";
+            else
+                c = "狼人获胜条件为屠边\n";
+            c = "两人平票时PK" + (Application.Current as App).PKnum.ToString() + "轮\n";
+            d = "每人的发言时间为" + (Application.Current as App).speaktime.ToString() + "s\n";
+            e = "警长发言时间为" + (Application.Current as App).sheriffspeaktime.ToString() + "s\n";
+            f = "每人的遗言时间为" + (Application.Current as App).lastwordtime.ToString() + "s\n";
+            recordTB.Text +=a+b+c+d+e+f;
+            #endregion
+            for (int i=0;;i++)//用无限循环来开始首夜直到游戏终止状态达成
             {
                 if(i==0)//首夜
                 {
@@ -122,8 +147,7 @@ namespace Werewolf_kill_v2.Views
             List<Controler> newList = new List<Controler>();//List初始化
             for(int i=0;i<controlers.Count;i++)
             {
-                controlers[i] = new Controler(i);//控制者对象遍历并各个进行初始化
-                newList.Insert(random.Next(newList.Count), controlers[i]);//随机插入newlist，接下来进行角色分配
+                newList.Insert(random.Next(newList.Count+1), controlers[i]);//随机插入newlist，接下来进行角色分配
             }
             switch (playernum)//随机分散后的控制者角色分配
             {
@@ -187,6 +211,7 @@ namespace Werewolf_kill_v2.Views
         #region 首夜方法
         public void StartNight( )
         {
+            recordTB.Text += "首夜开始\n";
             //狼人行动
             foreach(Controler item in langrenlist)
             {
@@ -198,12 +223,13 @@ namespace Werewolf_kill_v2.Views
 
                 //获取GUI处的杀人投票与弃票并于此处杀人
             }
+            PoliceCampaign();
             //女巫行动
             //预言家行动
         }
         #endregion
         #region 上警方法
-        public void PoliceCampaign(List<Controler> controlers)
+        public void PoliceCampaign()
         {
             //狼人行动
             //女巫行动
@@ -211,9 +237,30 @@ namespace Werewolf_kill_v2.Views
         }
         #endregion
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            TheGame();
-        }
     }
+    public class Converter : IValueConverter
+    {
+        public object Convert(object value, System.Type targetType, object parameter, string language)
+        {
+            return ((int)value + 1);
+        }
+        public object ConvertBack(object value, System.Type targetType, object parameter, string language)
+        {
+            return ((int)value -1);
+        }
+    }//值转换器
+    public class Converter0 : IValueConverter
+    {
+        public object Convert(object value, System.Type targetType, object parameter, string language)
+        {
+            if ((bool)value)
+                return "AI";
+            else
+                return "玩家";
+        }
+        public object ConvertBack(object value, System.Type targetType, object parameter, string language)
+        {
+            throw new NotImplementedException();
+        }
+    }//值转换器
 }

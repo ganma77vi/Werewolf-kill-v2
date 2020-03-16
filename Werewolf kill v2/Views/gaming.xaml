@@ -6,35 +6,52 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    xmlns:viewmodel="using:Werewolf_kill_v2.Viewmodel"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    xmlns:viewmodel="using:Werewolf_kill_v2.Viewmodel">
     <Page.DataContext>
         <viewmodel:ControlerViewModel></viewmodel:ControlerViewModel>
     </Page.DataContext>
-        <Grid>
+    <Page.Resources>
+        <local:Converter x:Key="Converter"></local:Converter>
+        <local:Converter0 x:Key="Converter0"></local:Converter0>
+    </Page.Resources>
+    <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="6*"></RowDefinition>
             <RowDefinition Height="4*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
+            
             <ColumnDefinition Width="3*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <GridView ItemsSource="{Binding Controlers}" SelectionMode="Single" IsItemClickEnabled="True">
+        <GridView Grid.Row="1" ItemsSource="{Binding Controlers}" SelectionMode="Single" IsItemClickEnabled="True">
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Height="50" Width="120">
-                        <TextBlock Text="{Binding Sn}" ></TextBlock>
+                    <StackPanel Background="{StaticResource cBrush}" Orientation="Horizontal" Height="50" Width="120">
+                        <TextBlock Text="{Binding Sn,Converter={StaticResource Converter}}" ></TextBlock>
+                        <TextBlock Text="{Binding  Role.Rolename}" ></TextBlock>
+                        <TextBlock Text="{Binding IsAI,Converter={StaticResource Converter0}}" Margin="15,0,0,0"></TextBlock>
                     </StackPanel>
                 </DataTemplate>
             </GridView.ItemTemplate>
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
-                    <Setter Property="BorderBrush" Value="Blue"></Setter>
+                    <Setter Property="BorderBrush" Value="Black"></Setter>
                     <Setter Property="BorderThickness" Value="0.5"></Setter>
                     <Setter Property="Margin" Value="0"></Setter>
                 </Style>
             </GridView.ItemContainerStyle>
         </GridView>
+        <Grid  Grid.Row="1" Grid.Column="1">
+            <Border  Background="{StaticResource cBrush}" BorderThickness="3" Margin="0,0,15,0">
+                <Border.BorderBrush>
+                    <SolidColorBrush Opacity="0.5" Color="Black"></SolidColorBrush>
+                </Border.BorderBrush>
+                <ScrollViewer HorizontalScrollMode="Disabled">
+                    <TextBlock Name="recordTB" TextWrapping="Wrap"></TextBlock>
+                </ScrollViewer>
+            </Border>
+        </Grid>
     </Grid>
 </Page>

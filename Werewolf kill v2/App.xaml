@@ -108,5 +108,23 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <AcrylicBrush x:Key="aBrush"
+              BackgroundSource="HostBackdrop"
+              TintLuminosityOpacity="0.2"
+              TintOpacity="0.5"
+              TintColor="#FFA2A4A5"
+              FallbackColor="White"/>
+        <AcrylicBrush x:Key="bBrush"
+              BackgroundSource="HostBackdrop"
+              TintLuminosityOpacity="0.3"
+              TintOpacity="0.9"
+              TintColor="#FF252526"
+              FallbackColor="White"/>
+        <AcrylicBrush x:Key="cBrush"
+              BackgroundSource="HostBackdrop"
+              TintLuminosityOpacity="0.3"
+              TintOpacity="0.9"
+              TintColor="#FFF1F1F1"
+              FallbackColor="White"/>
     </Application.Resources>
 </Application>

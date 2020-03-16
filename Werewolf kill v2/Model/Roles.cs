@@ -14,7 +14,10 @@ namespace Werewolf_kill_v2.Model
     }
     class Pingmin : Roles
     {
-        
+        public Pingmin()
+        {
+            Rolename = "平民";
+        }
     }
     class Langren : Roles
     {
@@ -22,6 +25,10 @@ namespace Werewolf_kill_v2.Model
 
         public int KillvoteSn { get => killvoteSn; set => killvoteSn = value; }
 
+        public Langren()
+        {
+            Rolename = "狼人";
+        }
         public void SelfExplosion()//自爆方法
         {
 
@@ -36,10 +43,17 @@ namespace Werewolf_kill_v2.Model
         {
 
         }
+        public Yuyanjia()
+        {
+            Rolename = "预言家";
+        }
     }
     class Jingzhang : Roles
     {
-
+        public Jingzhang()
+        {
+            Rolename = "警长";
+        }
     }
     class Nvwu : Roles
     {
@@ -62,13 +76,24 @@ namespace Werewolf_kill_v2.Model
         {
 
         }
+        public Nvwu()
+        {
+            Rolename = "女巫";
+        }
     }
     class Lieren : Roles
     {
         public int shootSn;//射谁
+        public Lieren()
+        {
+            Rolename = "猎人";
+        }
     }
     class Baichi : Roles
     {
-
+        public Baichi()
+        {
+            Rolename = "白痴";
+        }
     }
 }

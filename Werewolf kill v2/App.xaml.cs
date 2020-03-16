@@ -5,8 +5,11 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -26,6 +29,14 @@ namespace Werewolf_kill_v2
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，
         /// 已执行，逻辑上等同于 main() 或 WinMain()。
         /// </summary>
+        public bool isSelfExplosion;//是否开启狼人自爆
+        public bool isSingleExplosion;//是否单爆
+        public bool isKillAll;//是否屠城
+        public bool isSelfAntidote;//女巫是否自救
+        public int PKnum;//PK次数
+        public int lastwordtime;//遗言时间
+        public int speaktime;//发言时间
+        public int sheriffspeaktime;//警长发言时间
         public int playernum;//玩家人数
         public int controlernum;//总游戏人数
         public App()

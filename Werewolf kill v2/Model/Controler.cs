@@ -18,6 +18,7 @@ namespace Werewolf_kill_v2.Model
         private float dayvotes;//被放逐得票数
         private int killvotes;//被杀投票数
         private bool iseyeopen;//是否睁眼
+        private bool isAI;//是否AI
         public Roles Role { get => role; set => role = value; }
         public int Sn { get => sn; set => sn = value; }
         public string Isalive { get => isalive; set => isalive = value; }
@@ -28,6 +29,7 @@ namespace Werewolf_kill_v2.Model
         public float Dayvotes { get => dayvotes; set => dayvotes = value; }
         public int Killvotes { get => killvotes; set => killvotes = value; }
         public bool Iseyeopen { get => iseyeopen; set => iseyeopen = value; }
+        public bool IsAI { get => isAI; set => isAI = value; }
 
         public  Controler(int sn_) //sn初始化赋值
         {
@@ -42,14 +44,14 @@ namespace Werewolf_kill_v2.Model
     {
         public AI(int sn_) :base(sn_)
         {
-            
+            IsAI = true;
         }
     }
     public class Player : Controler//玩家
     {
         public Player(int sn_) : base(sn_)
         {
-
+            IsAI = false;
         }
     }
 }
