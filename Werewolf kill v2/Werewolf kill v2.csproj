@@ -127,6 +127,9 @@
     <Compile Include="Model\VictoryCondition.cs" />
     <Compile Include="Network\Httprequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserControls\MyPopup.xaml.cs">
+      <DependentUpon>MyPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Viewmodel\BaseViewModel.cs" />
     <Compile Include="Viewmodel\ControlerViewModel.cs" />
     <Compile Include="Views\Fupan.xaml.cs">
@@ -162,6 +165,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControls\MyPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Fupan.xaml">
       <SubType>Designer</SubType>

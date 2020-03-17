@@ -4,9 +4,12 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Werewolf_kill_v2.Model;
+using Werewolf_kill_v2.UserControls;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -43,6 +46,8 @@ namespace Werewolf_kill_v2.Views
         int gamestatus;//游戏终止状态，详见Werewolf_kill_v2.Model.VictoryCondition
         bool werewolfWin;//狼人是否获胜
         bool humanWin;//人类是否获胜
+        List<TextBlock> roletblist;//显示角色名称的textblock列表
+        private TaskCompletionSource<object> continueClicked;
         Viewmodel.ControlerViewModel controlerViewModel;
         #endregion
         public gaming()
@@ -53,7 +58,7 @@ namespace Werewolf_kill_v2.Views
             TheGame();
         }
         #region 游戏进程
-        public void TheGame() //整个游戏进程
+        public async void TheGame() //整个游戏进程
         {
             GameInitialize((Application.Current as App).playernum, (Application.Current as App).controlernum);
             #region 游戏配置播报
@@ -85,6 +90,7 @@ namespace Werewolf_kill_v2.Views
             {
                 if(i==0)//首夜
                 {
+                    await CallMessageDialog("首夜");
                     StartNight();
                 }
                 if(i==1)//第一天
@@ -126,6 +132,7 @@ namespace Werewolf_kill_v2.Views
                 aiList.Add(new AI(i));
             }
 
+            roletblist = new List<TextBlock>();
             controlerlist = new ObservableCollection<Controler>();//将所有控制者信息存入一个List
             for (int i = 0; i < playerList.Count; i++)
             {
@@ -187,6 +194,10 @@ namespace Werewolf_kill_v2.Views
             pingminlist = new ObservableCollection<Controler>();
             langrenlist1 = new List<Langren>();
             pingminlist1 = new List<Pingmin>();
+            yuyanjia1 = new Yuyanjia();
+            lieren1 = new Lieren();
+            nvwu1 = new Nvwu();
+            lieren1 = new Lieren();
 
 
             /*通过随机分配完成并排序好的控制者List中
@@ -204,28 +215,89 @@ namespace Werewolf_kill_v2.Views
                     pingminlist.Add(item);
                     pingminlist1.Add((Pingmin)item.Role);
                 }
+                if (item.Role is Yuyanjia)
+                {
+                    yuyanjia1 = (Yuyanjia)item.Role;
+                }
+                if (item.Role is Nvwu)
+                {
+                    nvwu1 = (Nvwu)item.Role;
+                }
+                if (item.Role is Lieren)
+                {
+                    lieren1 = (Lieren)item.Role;
+                }
+                if (item.Role is Baichi)
+                {
+                    baichi1 = (Baichi)item.Role;
+                }
             }
-
         }
         #endregion
         #region 首夜方法
-        public void StartNight( )
+        public async void StartNight( )
         {
             recordTB.Text += "首夜开始\n";
-            //狼人行动
-            foreach(Controler item in langrenlist)
+            //预言家行动
+            await CallMessageDialog("预言家请睁眼");
+            foreach (TextBlock item in roletblist)
             {
-                item.Iseyeopen = true;//所有狼人睁眼
+                if (item.Text == "预言家")
+                {
+                    item.Opacity = 1;
+                }
             }
+            await CallMessageDialog("请选择要查验的人");
+            await GetResults("查验");
+            //此处查人。给所有玩家添加属性，是否被查
+            await CallMessageDialog("查验完成，他的身份是"+controlerlist[yuyanjia1.RoleCheck].Role.Rolename);
+            foreach (TextBlock item in roletblist)
+            {
+                if (item.Text == "预言家")
+                {
+                    item.Opacity = 0;
+                }
+            }
+            await CallMessageDialog("所有狼人睁眼");
+            //狼人行动
+            foreach (TextBlock item in roletblist)
+            {
+                if (item.Text == "狼人")
+                {
+                    item.Opacity = 1;
+                }
+            }
+            await CallMessageDialog("狼人依次发言");
             foreach (Controler item in langrenlist)
             {
-                item.Speak();//全部狼人睁眼后按顺序发言
-
-                //获取GUI处的杀人投票与弃票并于此处杀人
+                await CallMessageDialog(item.Sn+1+"号为狼人，请发言");
+                item.Speak();
             }
-            PoliceCampaign();
+            await CallMessageDialog("狼人投票杀人");
+            foreach (TextBlock item in roletblist)
+            {
+                if (item.Text == "狼人")
+                {
+                    item.Opacity = 0;
+                }
+            }
             //女巫行动
-            //预言家行动
+            await CallMessageDialog("女巫请睁眼");
+            foreach (TextBlock item in roletblist)
+            {
+                if (item.Text == "女巫")
+                {
+                    item.Opacity = 1;
+                }
+            }
+            await CallMessageDialog("今晚" + "" + "死了，你要救吗？要使用毒药吗？");
+            foreach (TextBlock item in roletblist)
+            {
+                if (item.Text == "女巫")
+                {
+                    item.Opacity = 0;
+                }
+            }
         }
         #endregion
         #region 上警方法
@@ -237,6 +309,37 @@ namespace Werewolf_kill_v2.Views
         }
         #endregion
 
+        private void rolenameTB_Loaded(object sender, RoutedEventArgs e)
+        {
+            TextBlock tb = sender as TextBlock;
+            roletblist.Add(tb);
+        }
+        public async Task CallMessageDialog(string message)
+        {
+            MyPopup popup = new MyPopup(message);
+            await popup.ShowAPopup();
+        }
+        private void confirmButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (continueClicked != null)
+                continueClicked.TrySetResult(null);
+        }
+        private async Task GetResults(string buttoncontent)//异步等待方法
+        {
+            continueClicked = new TaskCompletionSource<object>();
+            chooseCB.Opacity = 1;
+            confirmButton.Opacity = 1;
+            confirmButton.Content = buttoncontent;
+            await continueClicked.Task;
+            chooseCB.Opacity = 1;
+            confirmButton.Opacity =0;
+        }
+
+        private void chooseCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = sender as ComboBox;
+            yuyanjia1.RoleCheck = comboBox.SelectedIndex;
+        }
     }
     public class Converter : IValueConverter
     {

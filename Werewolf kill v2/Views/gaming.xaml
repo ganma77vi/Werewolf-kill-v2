@@ -25,12 +25,12 @@
             <ColumnDefinition Width="3*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <GridView Grid.Row="1" ItemsSource="{Binding Controlers}" SelectionMode="Single" IsItemClickEnabled="True">
+        <GridView Name="myGridView" Grid.Row="1" ItemsSource="{Binding Controlers}" SelectionMode="Single" IsItemClickEnabled="True">
             <GridView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Background="{StaticResource cBrush}" Orientation="Horizontal" Height="50" Width="120">
                         <TextBlock Text="{Binding Sn,Converter={StaticResource Converter}}" ></TextBlock>
-                        <TextBlock Text="{Binding  Role.Rolename}" ></TextBlock>
+                        <TextBlock Name="rolenameTB" Loaded="rolenameTB_Loaded" Text="{Binding  Role.Rolename}" Opacity="0"></TextBlock>
                         <TextBlock Text="{Binding IsAI,Converter={StaticResource Converter0}}" Margin="15,0,0,0"></TextBlock>
                     </StackPanel>
                 </DataTemplate>
@@ -52,6 +52,29 @@
                     <TextBlock Name="recordTB" TextWrapping="Wrap"></TextBlock>
                 </ScrollViewer>
             </Border>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0"></TextBlock>
+            <ComboBox Name="chooseCB" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"
+                      ItemsSource="{Binding Controlers}" Opacity="0" SelectionChanged="chooseCB_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Sn,Converter={StaticResource Converter}}"></TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button Name="confirmButton" Grid.Row="0" Grid.Column="3" Content="" HorizontalAlignment="Center"
+                    Click="confirmButton_Click" Opacity="0"></Button>
         </Grid>
     </Grid>
 </Page>

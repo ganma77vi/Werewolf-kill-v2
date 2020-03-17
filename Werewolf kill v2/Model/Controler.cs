@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 
 namespace Werewolf_kill_v2.Model
 {
@@ -38,6 +39,16 @@ namespace Werewolf_kill_v2.Model
         public void Speak()
         {
 
+        }
+        public void Openeyes(TextBlock tb)
+        {
+            iseyeopen = true;
+            tb.Visibility = Windows.UI.Xaml.Visibility.Visible;
+        }
+        public void Closeeyes(TextBlock tb)
+        {
+            iseyeopen = false;
+            tb.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
         }
     }
     public class AI : Controler//电脑AI

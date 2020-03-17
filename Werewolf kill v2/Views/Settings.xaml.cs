@@ -28,9 +28,9 @@ namespace Werewolf_kill_v2.Views
             this.InitializeComponent();
 
         }
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            base.OnNavigatedTo(e);
+             base.OnNavigatedTo(e);
             //#region 读取全局变量的初始配置设置并配置到UI
             //selfexplosioncheckbox.IsChecked = (Application.Current as App).isSelfExplosion;
             //if ((Application.Current as App).isSingleExplosion)
