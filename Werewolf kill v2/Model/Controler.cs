@@ -20,6 +20,7 @@ namespace Werewolf_kill_v2.Model
         private int killvotes;//被杀投票数
         private bool iseyeopen;//是否睁眼
         private bool isAI;//是否AI
+        private int deadday;//死亡时间
         public Roles Role { get => role; set => role = value; }
         public int Sn { get => sn; set => sn = value; }
         public bool Isalive { get => isalive; set => isalive = value; }
@@ -31,11 +32,13 @@ namespace Werewolf_kill_v2.Model
         public int Killvotes { get => killvotes; set => killvotes = value; }
         public bool Iseyeopen { get => iseyeopen; set => iseyeopen = value; }
         public bool IsAI { get => isAI; set => isAI = value; }
+        public int Deadday { get => deadday; set => deadday = value; }
 
         public  Controler(int sn_) //sn初始化赋值
         {
             Sn = sn_;
             Isalive = true;
+            Deadday = -1;
         }
         public void Speak()
         {

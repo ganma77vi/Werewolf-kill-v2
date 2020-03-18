@@ -21,14 +21,14 @@ namespace Werewolf_kill_v2.Model
     }
     class Langren : Roles
     {
-        private List<int> killvotelist;//刀人投票给谁
+        private List<int[]> killvotelist;//刀人投票给谁
 
-        public List<int> Killvotelist { get => killvotelist; set => killvotelist = value; }
+        public List<int[]> Killvotelist { get => killvotelist; set => killvotelist = value; }
 
         public Langren()
         {
             Rolename = "狼人";
-            Killvotelist = new List<int>();
+            Killvotelist = new List<int[]>();
         }
 
         public void SelfExplosion()//自爆方法
