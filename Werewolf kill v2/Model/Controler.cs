@@ -11,7 +11,7 @@ namespace Werewolf_kill_v2.Model
     {
         private Roles role; //角色
         private int sn;//序号(从0开始)
-        private string isalive;     //是否存活
+        private bool isalive;     //是否存活
         private bool ifincampaign;//是否曾参与警察竞选
         private int campaignvoteSn;//上警投票给谁
         private int campaignvotes;//上警得票数
@@ -22,7 +22,7 @@ namespace Werewolf_kill_v2.Model
         private bool isAI;//是否AI
         public Roles Role { get => role; set => role = value; }
         public int Sn { get => sn; set => sn = value; }
-        public string Isalive { get => isalive; set => isalive = value; }
+        public bool Isalive { get => isalive; set => isalive = value; }
         public bool Ifincampaign { get => ifincampaign; set => ifincampaign = value; }
         public int CampaignvoteSn { get => campaignvoteSn; set => campaignvoteSn = value; }
         public int Campaignvotes { get => campaignvotes; set => campaignvotes = value; }
@@ -35,6 +35,7 @@ namespace Werewolf_kill_v2.Model
         public  Controler(int sn_) //sn初始化赋值
         {
             Sn = sn_;
+            Isalive = true;
         }
         public void Speak()
         {

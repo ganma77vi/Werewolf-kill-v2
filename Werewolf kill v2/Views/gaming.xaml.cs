@@ -47,6 +47,7 @@ namespace Werewolf_kill_v2.Views
         bool werewolfWin;//狼人是否获胜
         bool humanWin;//人类是否获胜
         List<TextBlock> roletblist;//显示角色名称的textblock列表
+        bool isconfirm;
         private TaskCompletionSource<object> continueClicked;
         Viewmodel.ControlerViewModel controlerViewModel;
         #endregion
@@ -238,51 +239,126 @@ namespace Werewolf_kill_v2.Views
         public async void StartNight( )
         {
             recordTB.Text += "首夜开始\n";
-            //预言家行动
-            await CallMessageDialog("预言家请睁眼");
-            foreach (TextBlock item in roletblist)
-            {
-                if (item.Text == "预言家")
-                {
-                    item.Opacity = 1;
-                }
-            }
-            await CallMessageDialog("请选择要查验的人");
-            await GetResults("查验");
-            //此处查人。给所有玩家添加属性，是否被查
-            await CallMessageDialog("查验完成，他的身份是"+controlerlist[yuyanjia1.RoleCheck].Role.Rolename);
-            foreach (TextBlock item in roletblist)
-            {
-                if (item.Text == "预言家")
-                {
-                    item.Opacity = 0;
-                }
-            }
-            await CallMessageDialog("所有狼人睁眼");
-            //狼人行动
-            foreach (TextBlock item in roletblist)
-            {
-                if (item.Text == "狼人")
-                {
-                    item.Opacity = 1;
-                }
-            }
-            await CallMessageDialog("狼人依次发言");
-            foreach (Controler item in langrenlist)
-            {
-                await CallMessageDialog(item.Sn+1+"号为狼人，请发言");
-                item.Speak();
-            }
-            await CallMessageDialog("狼人投票杀人");
-            foreach (TextBlock item in roletblist)
-            {
-                if (item.Text == "狼人")
-                {
-                    item.Opacity = 0;
-                }
-            }
+            //#region 预言家行动
+            //await CallMessageDialog("预言家请睁眼");
+            //foreach (TextBlock item in roletblist)
+            //{
+            //    if (item.Text == "预言家")
+            //    {
+            //        item.Opacity = 1;
+            //    }
+            //}
+            //detailTB.Text = "现在是"+(yuyanjia.Sn+1).ToString()+"号玩家操作时间,身份为"+yuyanjia1.Rolename;
+            //await CallMessageDialog("请选择要查验的人或不查");
+            //await GetResults(yuyanjia1.Rolename,null);
+            //if (yuyanjia1.Checklist[0] != -1)
+            //    await CallMessageDialog("查验完成，他的身份是" + controlerlist[yuyanjia1.Checklist[0]].Role.Rolename);
+            //else
+            //    await CallMessageDialog("你选择了不查");
+            //foreach (TextBlock item in roletblist)
+            //{
+            //    if (item.Text == "预言家")
+            //    {
+            //        item.Opacity = 0;
+            //    }
+            //}
+            //detailTB.Text = "";
+            //#endregion
+            //#region 狼人行动
+            //await CallMessageDialog("所有狼人睁眼");
+            //foreach (TextBlock item in roletblist)
+            //{
+            //    if (item.Text == "狼人")
+            //    {
+            //        item.Opacity = 1;
+            //    }
+            //}
+            //await CallMessageDialog("狼人依次发言");
+            //foreach (Controler item in langrenlist)
+            //{
+            //    await CallMessageDialog(item.Sn+1+"号为狼人，请发言");
+            //    detailTB.Text = "现在是" + (item.Sn + 1).ToString() + "号玩家操作时间,身份为" + item.Role.Rolename;
+            //    await GetResults("狼人发言",item);
+            //    item.Speak();
+            //}
+            //detailTB.Text = "";
+            //await CallMessageDialog("狼人投票杀人");
+            //foreach (Controler item in langrenlist)
+            //{
+            //    await CallMessageDialog(item.Sn + 1 + "号为狼人，请投票杀人或弃票");
+            //    detailTB.Text = "现在是" + (item.Sn + 1).ToString() + "号玩家操作时间,身份为" + item.Role.Rolename;
+            //    await GetResults("狼人投票杀人",item);
+            //}
+            //detailTB.Text = "";
+
+            //List<int> templist = new List<int>();
+            //foreach(Langren item in langrenlist1)
+            //{
+            //    templist.Add(item.Killvotelist[0]);
+            //}
+            //templist=templist.Distinct().ToList();
+            //templist.RemoveAll(x => x==-1);
+            //if (templist.Count == 0)
+            //{
+            //    await CallMessageDialog("空刀");
+            //}
+            //if (templist.Count == 1)
+            //{
+            //    controlerlist[templist[0]].Isalive=false;
+            //    await CallMessageDialog("刀了"+(templist[0]+1)+"号");
+            //}
+            //if (templist.Count>1)
+            //{
+            //    await CallMessageDialog("投票不一,请重新投票,本轮投票不一将空刀");
+            //    await CallMessageDialog("每人10s发言时间表决");
+            //    foreach (Controler item in langrenlist)
+            //    {
+            //        await CallMessageDialog(item.Sn + 1 + "号为狼人，请发言");
+            //        detailTB.Text = "现在是" + (item.Sn + 1).ToString() + "号玩家操作时间,身份为" + item.Role.Rolename;
+            //        await GetResults("狼人发言", item);
+            //        item.Speak();
+            //    }
+            //    detailTB.Text = "";
+            //    await CallMessageDialog("狼人投票杀人");
+            //    foreach (Controler item in langrenlist)
+            //    {
+            //        await CallMessageDialog(item.Sn + 1 + "号为狼人，请投票杀人或弃票");
+            //        detailTB.Text = "现在是" + (item.Sn + 1).ToString() + "号玩家操作时间,身份为" + item.Role.Rolename;
+            //        await GetResults("狼人投票杀人", item);
+            //    }
+            //    templist = new List<int>();
+            //    foreach (Langren item in langrenlist1)
+            //    {
+            //        templist.Add(item.Killvotelist[1]);
+            //    }
+            //    templist=templist.Distinct().ToList();
+            //    templist.RemoveAll(x => x == -1);
+            //    if (templist.Count > 1)
+            //    {
+            //        await CallMessageDialog("意见不一而空刀");
+            //    }
+            //    else if (templist.Count == 0)
+            //    {
+            //        await CallMessageDialog("空刀");
+            //    }
+            //    else
+            //    {
+            //        controlerlist[templist[0]].Isalive = false;
+            //        await CallMessageDialog("刀了" + (templist[0] + 1) + "号");
+            //    }
+
+            //}
+            //foreach (TextBlock item in roletblist)
+            //{
+            //    if (item.Text == "狼人")
+            //    {
+            //        item.Opacity = 0;
+            //    }
+            //}
+            //#endregion
             //女巫行动
             await CallMessageDialog("女巫请睁眼");
+            detailTB.Text = "现在是" + (nvwu.Sn + 1).ToString() + "号玩家操作时间,身份为" + nvwu.Role.Rolename;
             foreach (TextBlock item in roletblist)
             {
                 if (item.Text == "女巫")
@@ -290,7 +366,17 @@ namespace Werewolf_kill_v2.Views
                     item.Opacity = 1;
                 }
             }
-            await CallMessageDialog("今晚" + "" + "死了，你要救吗？要使用毒药吗？");
+            foreach(Controler item in controlerlist)
+            {
+                if(item.Isalive == false)
+                {
+                    await CallMessageDialog("今晚" +(item.Sn+1) + "号死了，你要救吗？");
+                    await GetResults("女巫救人",item);
+                    break;
+                }
+            }
+            await CallMessageDialog("需要使用毒药吗？");
+            await GetResults("女巫毒人",null);
             foreach (TextBlock item in roletblist)
             {
                 if (item.Text == "女巫")
@@ -321,25 +407,89 @@ namespace Werewolf_kill_v2.Views
         }
         private void confirmButton_Click(object sender, RoutedEventArgs e)
         {
+            isconfirm = true;
             if (continueClicked != null)
                 continueClicked.TrySetResult(null);
         }
-        private async Task GetResults(string buttoncontent)//异步等待方法
+        private void cancleButton_Click(object sender, RoutedEventArgs e)
+        {
+            isconfirm = false;
+            if (continueClicked != null)
+                continueClicked.TrySetResult(null);
+        }
+        private async Task GetResults(string roleact,Controler controler)//异步等待方法
         {
             continueClicked = new TaskCompletionSource<object>();
-            chooseCB.Opacity = 1;
-            confirmButton.Opacity = 1;
-            confirmButton.Content = buttoncontent;
-            await continueClicked.Task;
-            chooseCB.Opacity = 1;
-            confirmButton.Opacity =0;
+            if(roleact=="预言家")
+            {
+                chooseCB.Opacity = 1;
+                cancleButton.Opacity = 1;
+                confirmButton.Opacity = 1;
+                confirmButton.Content = "查验";
+                cancleButton.Content = "不查验";
+                await continueClicked.Task;
+                chooseCB.Opacity = 0;
+                confirmButton.Opacity = 0;
+                cancleButton.Opacity = 0;
+                if(isconfirm)
+                    yuyanjia1.Checklist.Add(chooseCB.SelectedIndex);
+                else
+                    yuyanjia1.Checklist.Add(-1);
+            }
+            if (roleact == "狼人发言")
+            {
+                speakButton.Opacity = 1;
+                await continueClicked.Task;
+                speakButton.Opacity = 0;
+            }
+            if (roleact == "狼人投票杀人")
+            {
+                chooseCB.Opacity = 1;
+                cancleButton.Opacity = 1;
+                confirmButton.Opacity = 1;
+                confirmButton.Content = "杀";
+                cancleButton.Content = "弃票";
+                await continueClicked.Task;
+                chooseCB.Opacity = 0;
+                confirmButton.Opacity = 0;
+                cancleButton.Opacity = 0;
+                Langren temp = controler.Role as Langren;
+                if (isconfirm)
+                    temp.Killvotelist.Add(chooseCB.SelectedIndex);
+                else
+                    temp.Killvotelist.Add(-1);
+            }
+            if (roleact == "女巫救人")
+            {
+                cancleButton.Opacity = 1;
+                confirmButton.Opacity = 1;
+                confirmButton.Content = "救人";
+                cancleButton.Content = "不救";
+                await continueClicked.Task;
+                confirmButton.Opacity = 0;
+                cancleButton.Opacity = 0;
+                if (isconfirm)
+                    controler.Isalive = true;
+            }
+            if (roleact == "女巫毒人")
+            {
+                chooseCB.Opacity = 1;
+                cancleButton.Opacity = 1;
+                confirmButton.Opacity = 1;
+                confirmButton.Content = "毒";
+                cancleButton.Content = "不用毒";
+                await continueClicked.Task;
+                chooseCB.Opacity = 0;
+                confirmButton.Opacity = 0;
+                cancleButton.Opacity = 0;
+                if (isconfirm)
+                {
+                    controlerlist[chooseCB.SelectedIndex].Isalive = false;
+                    await CallMessageDialog("你毒死了"+(chooseCB.SelectedIndex+1)+"号");
+                }
+            }
         }
 
-        private void chooseCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ComboBox comboBox = sender as ComboBox;
-            yuyanjia1.RoleCheck = comboBox.SelectedIndex;
-        }
     }
     public class Converter : IValueConverter
     {

@@ -21,14 +21,16 @@ namespace Werewolf_kill_v2.Model
     }
     class Langren : Roles
     {
-        private int killvoteSn;//刀人投票给谁
+        private List<int> killvotelist;//刀人投票给谁
 
-        public int KillvoteSn { get => killvoteSn; set => killvoteSn = value; }
+        public List<int> Killvotelist { get => killvotelist; set => killvotelist = value; }
 
         public Langren()
         {
             Rolename = "狼人";
+            Killvotelist = new List<int>();
         }
+
         public void SelfExplosion()//自爆方法
         {
 
@@ -37,15 +39,18 @@ namespace Werewolf_kill_v2.Model
     class Yuyanjia : Roles
     {
         private int roleCheck;//查验谁
+        private List<int> checklist;//查验了哪些人
 
         public int RoleCheck { get => roleCheck; set => roleCheck = value; }
+        public List<int> Checklist { get => checklist; set => checklist = value; }
+
         public void CheckRole()//查验方法
         {
-
         }
         public Yuyanjia()
         {
             Rolename = "预言家";
+            Checklist = new List<int>();
         }
     }
     class Jingzhang : Roles
